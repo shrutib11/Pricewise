@@ -82,16 +82,19 @@ export async function generateEmailBody(
 
 const transporter = nodemailer.createTransport({
   host: 'smtp-mail.outlook.com',
-  port: 587,
-  secure: false, // true for 465, false for other ports
+  port: 587, // Use 465 for SSL
+  secure: false, // Use true for port 465
   auth: {
     user: 'shrutibhalodia11@outlook.com',
-    pass: process.env.EMAIL_PASSWORD, // Use the app password if 2FA is enabled
+    pass: process.env.EMAIL_PASSWORD,
   },
   tls: {
-    rejectUnauthorized: false
-  }
+    rejectUnauthorized: false // This may help in some environments
+  },
+  connectionTimeout: 20000, // Increase the connection timeout (default is 10,000ms)
+  greetingTimeout: 10000, // Adjust the greeting timeout if needed (default is 10,000ms)
 });
+
 
 export const sendEmail = async (emailContent: EmailContent, sendTo: string[]) => {
   const mailOptions = {
