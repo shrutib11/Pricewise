@@ -86,10 +86,10 @@ const transporter = nodemailer.createTransport({
   secure: false, // true for 465, false for other ports
   auth: {
     user: 'shrutibhalodia11@outlook.com',
-    pass: process.env.EMAIL_PASSWORD,
+    pass: process.env.EMAIL_PASSWORD, // Use the app password if 2FA is enabled
   },
   tls: {
-    ciphers: 'SSLv3'
+    rejectUnauthorized: false
   }
 });
 
